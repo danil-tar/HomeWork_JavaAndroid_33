@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     ListView simpleList;
@@ -14,6 +16,13 @@ public class MainActivity extends AppCompatActivity {
             "Germany", "India", "Italia", "France",
             "Canada", "USA", "Vietnam", "Great Britain",
             "Portugal", "Spain"};
+
+    int[] flags ={R.drawable.canada, R.drawable.china,
+            R.drawable.france, R.drawable.germany,
+            R.drawable.india, R.drawable.italia,
+            R.drawable.portugal, R.drawable.russia,
+            R.drawable.spain, R.drawable.usa,
+            R.drawable.vietnam, R.drawable.great_britain};
 
     @SuppressLint("MissingInflatedId")
     @Override
