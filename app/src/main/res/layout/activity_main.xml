@@ -8,6 +8,12 @@
     tools:context=".MainActivity">
 
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -16,7 +22,10 @@
         android:text="@string/app_head"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+
+
+        />
 
     <ListView
         android:id="@+id/simpleListView"
