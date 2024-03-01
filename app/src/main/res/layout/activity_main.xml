@@ -3,40 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textHead"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#878484"
-            android:textAlignment="viewStart"
-            android:padding="10dp"
-            android:text="@string/app_head"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
+        android:background="#B89157"
+        android:padding="10dp"
+        android:text="@string/app_head"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/simpleListView"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#878484"
         android:divider="#f00"
         android:dividerHeight="1dp"
-        android:listSelector="#8BC34A"
-        />
+        android:footerDividersEnabled="false"
+        android:listSelector="#8BC34A" />
 
 </LinearLayout>

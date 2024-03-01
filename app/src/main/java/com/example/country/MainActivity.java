@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view = inflater.inflate(R.layout.activity_main, null);
+            View view = inflater.inflate(R.layout.activity_item, null);
 
             TextView country = (TextView) view.findViewById(R.id.textView);
             ImageView flag = (ImageView) view.findViewById(R.id.icon);
