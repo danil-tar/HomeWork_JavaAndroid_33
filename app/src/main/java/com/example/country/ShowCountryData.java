@@ -21,14 +21,17 @@ public class ShowCountryData extends AppCompatActivity {
         TextView nameCapital = findViewById(R.id.name_capital);
         TextView areaCountry = findViewById(R.id.area_country);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
             return;
         }
-        nameCountry.setText(extras.getString("name_country"));
-        flagCountry.setBackgroundResource(extras.getInt("flag_country"));
-        nameCapital.setText(extras.getString("capital_country"));
-        areaCountry.setText(extras.getInt("area_country") + " km²");
+        Country serializableCountry =
+                (Country) bundle.getSerializable(Country.class.getSimpleName());
+
+        nameCountry.setText(serializableCountry.country);
+        flagCountry.setBackgroundResource(serializableCountry.flagId);
+        nameCapital.setText(serializableCountry.capital);
+        areaCountry.setText(serializableCountry.area + " km²");
 
         View buttonGoBack = findViewById(R.id.button_go_back);
         buttonGoBack.setOnClickListener(new View.OnClickListener() {

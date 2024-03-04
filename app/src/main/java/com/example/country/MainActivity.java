@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             92212, 505992};
 
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,15 +63,13 @@ public class MainActivity extends AppCompatActivity {
         simpleList.setAdapter(customAdapter);
 
         simpleList.setOnItemClickListener((parent, view, position, id) -> {
+            Country country = countryArrayLists.get(position);
             Intent intent = new Intent(this, ShowCountryData.class);
-            intent.putExtra("name_country", countryArrayLists.get(position).country);
-            intent.putExtra("flag_country", countryArrayLists.get(position).flagId);
-            intent.putExtra("capital_country", countryArrayLists.get(position).capital);
-            intent.putExtra("area_country", countryArrayLists.get(position).area);
+            intent.putExtra(Country.class.getSimpleName(), country);
+
             startActivity(intent);
         });
     }
-
 
 
     private static class CustomAdapter extends BaseAdapter {

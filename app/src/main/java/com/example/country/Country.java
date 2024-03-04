@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Country {
+import java.io.Serializable;
+
+public class Country implements Serializable {
     String country;
     int flagId;
     String capital;
@@ -21,6 +23,5 @@ public class Country {
         this.area = area;
 
     }
-
 
 }
