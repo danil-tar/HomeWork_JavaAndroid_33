@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.vietnam, R.drawable.great_britain,
             R.drawable.portugal, R.drawable.spain
     };
+    String[] capitalList = {"Moscow", "Beijing",
+            "Berlin", "New Delhi", "Rome", "Paris",
+            "Ottawa", "Washington", "Hanoi", "London",
+            "Lisbon", "Madrid"};
+    int[] areaList = {17098242, 9596961,
+            357578, 3287263, 301340, 543965,
+            9984670, 9826675, 331212, 242495,
+            92212, 505992};
 
 
     @SuppressLint("MissingInflatedId")
@@ -42,14 +51,28 @@ public class MainActivity extends AppCompatActivity {
 
         if (countryArrayLists.isEmpty()) {
             for (int i = 0; i < countryList.length; i++) {
-                countryArrayLists.add(new Country(countryList[i], flags[i]));
+                countryArrayLists.add(new Country(countryList[i],
+                        flags[i],
+                        capitalList[i],
+                        areaList[i]));
             }
         }
 
         simpleList = findViewById(R.id.simpleListView);
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), countryArrayLists);
         simpleList.setAdapter(customAdapter);
+
+        simpleList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(this, ShowCountryData.class);
+            intent.putExtra("name_country", countryArrayLists.get(position).country);
+            intent.putExtra("flag_country", countryArrayLists.get(position).flagId);
+            intent.putExtra("capital_country", countryArrayLists.get(position).capital);
+            intent.putExtra("area_country", countryArrayLists.get(position).area);
+            startActivity(intent);
+        });
     }
+
+
 
     private static class CustomAdapter extends BaseAdapter {
         Context context;

@@ -11,10 +11,15 @@ import android.widget.TextView;
 public class Country {
     String country;
     int flagId;
+    String capital;
+    int area;
 
-    public Country(String country, int flagId) {
+    public Country(String country, int flagId, String capital, int area) {
         this.country = country;
         this.flagId = flagId;
+        this.capital = capital;
+        this.area = area;
+
     }
 
 

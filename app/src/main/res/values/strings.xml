@@ -2,4 +2,9 @@
     <string name="app_name">Country</string>
     <string name="app_head">Country and Flags</string>
     <string name="name_country">Name Country</string>
+    <string name="name_capital">name_capital</string>
+    <string name="area_country">area_cuontry</string>
+    <string name="show_name_country">name_country</string>
+    <string name="flag_country">Flag Country</string>
+    <string name="go_back">Go back</string>
 </resources>
