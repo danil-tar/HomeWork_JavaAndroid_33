@@ -2,7 +2,6 @@ package com.example.country;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         simpleList.setOnItemClickListener((parent, view, position, id) -> {
             Country country = countryArrayLists.get(position);
-            Intent intent = new Intent(this, ShowCountryData.class);
+            Intent intent = new Intent(this, Details.class);
             intent.putExtra(Country.class.getSimpleName(), country);
 
             startActivity(intent);

@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ShowCountryData extends AppCompatActivity {
+public class Details extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_country_data);
+        setContentView(R.layout.activity_details);
 
         TextView nameCountry = findViewById(R.id.name_country);
         ImageView flagCountry = findViewById(R.id.flag_country);
