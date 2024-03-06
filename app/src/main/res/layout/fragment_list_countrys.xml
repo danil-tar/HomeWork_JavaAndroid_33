@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentListCountrys">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textFragmentListCountrys"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFC107"
+            android:padding="10dp"
+            android:text="@string/fragmentlistcountrys"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textHead"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#B89157"
+            android:padding="10dp"
+            android:text="@string/app_head"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/simpleListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#878484"
+            android:divider="#f00"
+            android:dividerHeight="1dp"
+            android:footerDividersEnabled="false"
+            android:listSelector="#8BC34A" />
+
+    </LinearLayout>
+
+</FrameLayout>
