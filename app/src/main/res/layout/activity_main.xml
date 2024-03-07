@@ -17,10 +17,10 @@
         android:textSize="20sp" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment"
-        android:name="com.example.country.FragmentListCountrys"
+        android:id="@+id/fragment_container_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+    </androidx.fragment.app.FragmentContainerView>
 
 
 

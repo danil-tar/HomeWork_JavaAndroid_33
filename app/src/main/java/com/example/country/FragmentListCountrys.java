@@ -1,5 +1,6 @@
 package com.example.country;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,13 @@ import java.util.List;
 public class FragmentListCountrys extends Fragment {
     private List<Country> countryArrayLists;
     private AdapterListCountrys adapterListCountrys;
+    private FragmentDetails fragmentDetails = new FragmentDetails();
+
+    interface OnFragmentSendDataListener {
+        void onSendData(Country country);
+    }
+    OnFragmentSendDataListener listener = (OnFragmentSendDataListener) getActivity();
+
 
     public FragmentListCountrys() {
         // Required empty public constructor
@@ -45,12 +53,24 @@ public class FragmentListCountrys extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_countrys, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.simpleListView);
+        ListView listView = view.findViewById(R.id.simpleListView);
 
         adapterListCountrys = new AdapterListCountrys(getContext(), countryArrayLists);
         listView.setAdapter(adapterListCountrys);
+
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            listener.onSendData(countryArrayLists.get(position));
+
+        });
+
+//        listView.setOnItemClickListener((parent, view1, position, id) -> {
+//            Country country = countryArrayLists.get(position);
+//            Intent intent = new Intent(getActivity(), Details.class);
+//            intent.putExtra(Country.class.getSimpleName(), country);
+
 
         return view;
     }
