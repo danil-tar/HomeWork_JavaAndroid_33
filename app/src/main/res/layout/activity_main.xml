@@ -22,16 +22,4 @@
         android:layout_height="match_parent">
     </androidx.fragment.app.FragmentContainerView>
 
-
-
-<!--    <ListView-->
-<!--        android:id="@+id/simpleListView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="#878484"-->
-<!--        android:divider="#f00"-->
-<!--        android:dividerHeight="1dp"-->
-<!--        android:footerDividersEnabled="false"-->
-<!--        android:listSelector="#8BC34A" />-->
-
 </LinearLayout>

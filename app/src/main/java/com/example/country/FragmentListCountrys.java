@@ -1,9 +1,12 @@
 package com.example.country;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +22,14 @@ public class FragmentListCountrys extends Fragment {
     private AdapterListCountrys adapterListCountrys;
     private FragmentDetails fragmentDetails = new FragmentDetails();
 
-    interface OnFragmentSendDataListener {
-        void onSendData(Country country);
+    interface CountrySelectListener {
+        void onCountrySelected(Country country);
     }
-    OnFragmentSendDataListener listener = (OnFragmentSendDataListener) getActivity();
+    CountrySelectListener listener;
 
 
-    public FragmentListCountrys() {
-        // Required empty public constructor
+    public FragmentListCountrys(CountrySelectListener countrySelectListener) {
+        this.listener = countrySelectListener;
     }
 
     @Override
@@ -50,28 +53,26 @@ public class FragmentListCountrys extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list_countrys, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ListView listView = view.findViewById(R.id.simpleListView);
 
         adapterListCountrys = new AdapterListCountrys(getContext(), countryArrayLists);
         listView.setAdapter(adapterListCountrys);
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {
-            listener.onSendData(countryArrayLists.get(position));
+            listener.onCountrySelected(countryArrayLists.get(position));
 
         });
 
-//        listView.setOnItemClickListener((parent, view1, position, id) -> {
-//            Country country = countryArrayLists.get(position);
-//            Intent intent = new Intent(getActivity(), Details.class);
-//            intent.putExtra(Country.class.getSimpleName(), country);
-
-
-        return view;
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+       return inflater.inflate(R.layout.fragment_list_countrys, container, false);
+
+    }
+
+
 }
