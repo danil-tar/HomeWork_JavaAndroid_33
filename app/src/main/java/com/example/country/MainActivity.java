@@ -2,10 +2,13 @@ package com.example.country;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity  {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
     private FragmentListCountrys fragmentListCountrys;
     private FragmentDetails fragmentDetails;
 
@@ -19,23 +22,28 @@ public class MainActivity extends AppCompatActivity  {
 
         fragmentDetails = new FragmentDetails();
 
+        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+
+        DetalesViewModel detalesViewModel = viewModelProvider.get(DetalesViewModel.class);
+        CountrysViewModel countrysViewModel = viewModelProvider.get(CountrysViewModel.class);
+
         fragmentListCountrys = new FragmentListCountrys(country -> {
-
-            fragmentDetails.setSelectedItem(country);
-
+            detalesViewModel.setSelectedItem(country);
+            fragmentDetails.setSelectedItem(detalesViewModel.getSelectedItem());
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_main, fragmentDetails)
                     .addToBackStack(null)
                     .commit();
-
         });
 
         setContentView(R.layout.activity_main);
 
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        countrysViewModel.getCountryArrayLists().observe(this, countryArrayLists -> {
+            fragmentListCountrys.setCountryArrayLists(countryArrayLists);
+        });
 
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_main, fragmentListCountrys)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container_main, fragmentListCountrys)
                 .commit();
     }
 

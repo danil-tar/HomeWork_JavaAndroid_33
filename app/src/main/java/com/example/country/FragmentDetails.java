@@ -20,11 +20,8 @@ public class FragmentDetails extends Fragment {
     ImageView flagCountry;
     TextView nameCapital;
     TextView areaCountry;
-    Button  buttonGoBack;
-
-
+    Button buttonGoBack;
     private Country country;
-
 
     public FragmentDetails() {
         // Required empty public constructor
@@ -34,6 +31,8 @@ public class FragmentDetails extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    DetalesViewModel detalesViewModel = new DetalesViewModel();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +53,7 @@ public class FragmentDetails extends Fragment {
         nameCountry.setText(country.country);
         flagCountry.setImageResource(country.flagId);
         nameCapital.setText(country.capital);
-        areaCountry.setText(String.valueOf("Area: " + country.area+" km²"));
+        areaCountry.setText(String.valueOf("Area: " + country.area + " km²"));
 
         buttonGoBack.setOnClickListener(v -> {
             FragmentListCountrys fragmentListCountrys =
