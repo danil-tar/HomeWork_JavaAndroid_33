@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ public class FragmentDetails extends Fragment {
     ImageView flagCountry;
     TextView nameCapital;
     TextView areaCountry;
-    Button  buttonGoBack;
+    Button buttonGoBack;
 
 
     private Country country;
@@ -45,16 +46,23 @@ public class FragmentDetails extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         nameCountry = view.findViewById(R.id.name_country);
         flagCountry = view.findViewById(R.id.flag_country);
         nameCapital = view.findViewById(R.id.name_capital);
         areaCountry = view.findViewById(R.id.area_country);
         buttonGoBack = view.findViewById(R.id.button_go_back);
 
-        nameCountry.setText(country.country);
-        flagCountry.setImageResource(country.flagId);
-        nameCapital.setText(country.capital);
-        areaCountry.setText(String.valueOf("Area: " + country.area+" km²"));
+        DetalsViewModel detalsViewModel
+                = new ViewModelProvider(requireActivity()).get(DetalsViewModel.class);
+        detalsViewModel.getSelectedCountry().observe(getViewLifecycleOwner(), country -> {
+            nameCountry.setText(country.country);
+            flagCountry.setImageResource(country.flagId);
+            nameCapital.setText(country.capital);
+            areaCountry.setText(String.valueOf("Area: " + country.area + " km²"));
+        });
+
+        country = detalsViewModel.getSelectedCountry().getValue();
 
         buttonGoBack.setOnClickListener(v -> {
             FragmentListCountrys fragmentListCountrys =

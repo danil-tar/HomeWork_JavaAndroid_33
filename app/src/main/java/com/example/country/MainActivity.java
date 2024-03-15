@@ -2,6 +2,7 @@ package com.example.country;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
@@ -16,6 +17,10 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+        DetalsViewModel detalsViewModel = viewModelProvider.get(DetalsViewModel.class);
+        CountrysViewModel countrysViewModel = viewModelProvider.get(CountrysViewModel.class);
 
         fragmentDetails = new FragmentDetails();
 

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class FragmentListCountrys extends Fragment {
     interface CountrySelectListener {
         void onCountrySelected(Country country);
     }
+
     CountrySelectListener listener;
 
 
@@ -36,20 +38,6 @@ public class FragmentListCountrys extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        countryArrayLists = new ArrayList<>();
-        countryArrayLists.add(new Country("Russia", R.drawable.russia, "Moscow", 17098242));
-        countryArrayLists.add(new Country("China", R.drawable.china, "Beijing", 9596961));
-        countryArrayLists.add(new Country("Germany", R.drawable.germany, "Berlin", 357578));
-        countryArrayLists.add(new Country("India", R.drawable.india, "New Delhi", 3287263));
-        countryArrayLists.add(new Country("Italia", R.drawable.italia, "Rome", 301340));
-        countryArrayLists.add(new Country("France", R.drawable.france, "Paris", 543965));
-        countryArrayLists.add(new Country("Canada", R.drawable.canada, "Ottawa", 9984670));
-        countryArrayLists.add(new Country("USA", R.drawable.usa, "Washington", 9826675));
-        countryArrayLists.add(new Country("Vietnam", R.drawable.vietnam, "Hanoi", 331212));
-        countryArrayLists.add(new Country("Great Britain", R.drawable.great_britain, "London", 242495));
-        countryArrayLists.add(new Country("Portugal", R.drawable.portugal, "Lisbon", 92212));
-        countryArrayLists.add(new Country("Spain", R.drawable.spain, "Madrid", 505992));
-
     }
 
     @Override
@@ -57,12 +45,18 @@ public class FragmentListCountrys extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ListView listView = view.findViewById(R.id.simpleListView);
 
+        CountrysViewModel countrysViewModel
+                = new ViewModelProvider(requireActivity()).get(CountrysViewModel.class);
+
+        countrysViewModel.getCountryArrayLists().observe(getViewLifecycleOwner(), countries -> {
+            countryArrayLists = countries;
+        });
+
         adapterListCountrys = new AdapterListCountrys(getContext(), countryArrayLists);
         listView.setAdapter(adapterListCountrys);
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             listener.onCountrySelected(countryArrayLists.get(position));
-
         });
 
     }
@@ -70,9 +64,7 @@ public class FragmentListCountrys extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       return inflater.inflate(R.layout.fragment_list_countrys, container, false);
-
+        return inflater.inflate(R.layout.fragment_list_countrys, container, false);
     }
-
 
 }
