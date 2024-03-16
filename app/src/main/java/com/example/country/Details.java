@@ -1,12 +1,15 @@
 package com.example.country;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.Serializable;
 
 public class Details extends AppCompatActivity {
 
@@ -25,13 +28,23 @@ public class Details extends AppCompatActivity {
         if (bundle == null) {
             return;
         }
-        Country serializableCountry =
-                (Country) bundle.getSerializable(Country.class.getSimpleName());
+        Serializable serializable =
+                bundle.getSerializable(Country.class.getSimpleName());
+        if (serializable == null) {
+            return;
+        }
+        Country serializableCountry = (Country) serializable;
 
-        nameCountry.setText(serializableCountry.country);
-        flagCountry.setBackgroundResource(serializableCountry.flagId);
-        nameCapital.setText(serializableCountry.capital);
-        areaCountry.setText(serializableCountry.area + " km²");
+        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+        DetalsViewModel detalsViewModel = viewModelProvider.get(DetalsViewModel.class);
+        detalsViewModel.setSelectedCountry(serializableCountry);
+
+        detalsViewModel.getSelectedCountry().observe(this, country -> {
+            nameCountry.setText(country.country);
+            flagCountry.setBackgroundResource(country.flagId);
+            nameCapital.setText(country.capital);
+            areaCountry.setText(country.area + " km²");
+        });
 
         View buttonGoBack = findViewById(R.id.button_go_back);
         buttonGoBack.setOnClickListener(new View.OnClickListener() {

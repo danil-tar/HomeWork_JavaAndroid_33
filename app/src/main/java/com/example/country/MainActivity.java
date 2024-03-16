@@ -1,10 +1,12 @@
 package com.example.country;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,56 +20,32 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Country> countryArrayLists = new ArrayList<>();
+    List<Country> countryList = new ArrayList<>();
     ListView simpleList;
-    String[] countryList = {"Russia", "China",
-            "Germany", "India", "Italia", "France",
-            "Canada", "USA", "Vietnam", "Great Britain",
-            "Portugal", "Spain"};
-
-    int[] flags = {R.drawable.russia, R.drawable.china,
-            R.drawable.germany, R.drawable.india,
-            R.drawable.italia, R.drawable.france,
-            R.drawable.canada, R.drawable.usa,
-            R.drawable.vietnam, R.drawable.great_britain,
-            R.drawable.portugal, R.drawable.spain
-    };
-    String[] capitalList = {"Moscow", "Beijing",
-            "Berlin", "New Delhi", "Rome", "Paris",
-            "Ottawa", "Washington", "Hanoi", "London",
-            "Lisbon", "Madrid"};
-    int[] areaList = {17098242, 9596961,
-            357578, 3287263, 301340, 543965,
-            9984670, 9826675, 331212, 242495,
-            92212, 505992};
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (countryArrayLists.isEmpty()) {
-            for (int i = 0; i < countryList.length; i++) {
-                countryArrayLists.add(new Country(countryList[i],
-                        flags[i],
-                        capitalList[i],
-                        areaList[i]));
-            }
-        }
-
         simpleList = findViewById(R.id.simpleListView);
-        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), countryArrayLists);
+
+        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+        CountrysViewModel countrysViewModel = viewModelProvider.get(CountrysViewModel.class);
+        countryList = countrysViewModel.getCountryArrayLists().getValue();
+        countrysViewModel.getCountryArrayLists().observe(this, countryArrayLists -> {
+            this.countryList = countryArrayLists;
+        });
+
+        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), countryList);
         simpleList.setAdapter(customAdapter);
 
         simpleList.setOnItemClickListener((parent, view, position, id) -> {
-            Country country = countryArrayLists.get(position);
-            Intent intent = new Intent(this, Details.class);
-            intent.putExtra(Country.class.getSimpleName(), country);
-
+            Intent intent = new Intent(MainActivity.this, Details.class);
+            intent.putExtra(Country.class.getSimpleName(), countryList.get(position));
             startActivity(intent);
         });
+
     }
 
 
