@@ -7,7 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FragmentListCountrys extends Fragment {
-    private List<Country> countryArrayLists;
+public class FragmentListCountrys extends Fragment implements CountrySelectListener{
+    List<Country> countryArrayLists;
     private AdapterListCountrys adapterListCountrys;
     private FragmentDetails fragmentDetails = new FragmentDetails();
-
-    interface CountrySelectListener {
-        void onCountrySelected(Country country);
-    }
     CountrySelectListener listener;
 
+    public FragmentListCountrys() {
+    }
 
     public FragmentListCountrys(CountrySelectListener countrySelectListener) {
         this.listener = countrySelectListener;
@@ -36,19 +37,24 @@ public class FragmentListCountrys extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        countryArrayLists = new ArrayList<>();
-        countryArrayLists.add(new Country("Russia", R.drawable.russia, "Moscow", 17098242));
-        countryArrayLists.add(new Country("China", R.drawable.china, "Beijing", 9596961));
-        countryArrayLists.add(new Country("Germany", R.drawable.germany, "Berlin", 357578));
-        countryArrayLists.add(new Country("India", R.drawable.india, "New Delhi", 3287263));
-        countryArrayLists.add(new Country("Italia", R.drawable.italia, "Rome", 301340));
-        countryArrayLists.add(new Country("France", R.drawable.france, "Paris", 543965));
-        countryArrayLists.add(new Country("Canada", R.drawable.canada, "Ottawa", 9984670));
-        countryArrayLists.add(new Country("USA", R.drawable.usa, "Washington", 9826675));
-        countryArrayLists.add(new Country("Vietnam", R.drawable.vietnam, "Hanoi", 331212));
-        countryArrayLists.add(new Country("Great Britain", R.drawable.great_britain, "London", 242495));
-        countryArrayLists.add(new Country("Portugal", R.drawable.portugal, "Lisbon", 92212));
-        countryArrayLists.add(new Country("Spain", R.drawable.spain, "Madrid", 505992));
+
+//        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+//        CountrysListViewModel countrysListViewModel
+//                = viewModelProvider.get(CountrysListViewModel.class);
+//        countryArrayLists = countrysListViewModel.getCountryArrayList().getValue();
+//        countrysListViewModel.getCountryArrayList()
+//                .observe(this, countryArrayList -> {
+//                    countryArrayLists.clear();
+//                    countryArrayLists.addAll(countryArrayList);
+//                });
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.d( "TEST", "onCreateView:fragment_list_countrys");
+        return inflater.inflate(R.layout.fragment_list_countrys, container, false);
 
     }
 
@@ -60,19 +66,23 @@ public class FragmentListCountrys extends Fragment {
         adapterListCountrys = new AdapterListCountrys(getContext(), countryArrayLists);
         listView.setAdapter(adapterListCountrys);
 
+        Log.d("TEST", "onViewCreated:fragment_list_countrys");
+
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             listener.onCountrySelected(countryArrayLists.get(position));
 
+            Log.d("TEST", "onItemClick:fragment_list_countrys");
         });
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-       return inflater.inflate(R.layout.fragment_list_countrys, container, false);
-
+    public void onCountrySelected(Country country) {
+        fragmentDetails.setSelectedItem(country);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container_main, fragmentDetails)
+                .addToBackStack(null)
+                .commit();
     }
-
-
 }

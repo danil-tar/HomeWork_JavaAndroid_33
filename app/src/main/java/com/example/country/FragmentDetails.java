@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class FragmentDetails extends Fragment {
     TextView nameCountry;
     ImageView flagCountry;
@@ -56,11 +58,12 @@ public class FragmentDetails extends Fragment {
         nameCapital.setText(country.capital);
         areaCountry.setText(String.valueOf("Area: " + country.area+" km²"));
 
+
         buttonGoBack.setOnClickListener(v -> {
             FragmentListCountrys fragmentListCountrys =
-                    ((MainActivity) getActivity()).getFragmentListCountrys();
+                    ((MainActivity) requireActivity()).getFragmentListCountrys();
 
-            getActivity().getSupportFragmentManager()
+            requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container_main, fragmentListCountrys)
                     .commit();

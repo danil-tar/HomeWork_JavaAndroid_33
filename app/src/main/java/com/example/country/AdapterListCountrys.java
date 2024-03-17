@@ -13,18 +13,18 @@ import java.util.List;
 public class AdapterListCountrys extends BaseAdapter {
 
     Context context;
-    List<Country> countryArrayLists;
+    List<Country> countryList;
     LayoutInflater inflater;
 
     public AdapterListCountrys(Context applicationContext, List<Country> countryArrayLists) {
         this.context = applicationContext;
-        this.countryArrayLists = countryArrayLists;
-        inflater = (LayoutInflater.from(applicationContext));
+        this.countryList = countryArrayLists;
+        inflater = LayoutInflater.from(applicationContext);
     }
 
     @Override
     public int getCount() {
-        return countryArrayLists.size();
+        return countryList.size();
     }
 
     @Override
@@ -45,8 +45,8 @@ public class AdapterListCountrys extends BaseAdapter {
         TextView country = (TextView) view.findViewById(R.id.textView);
         ImageView flag = (ImageView) view.findViewById(R.id.icon);
 
-        country.setText(countryArrayLists.get(position).country);
-        flag.setImageResource(countryArrayLists.get(position).flagId);
+        country.setText(countryList.get(position).country);
+        flag.setImageResource(countryList.get(position).flagId);
 
         return view;
     }
