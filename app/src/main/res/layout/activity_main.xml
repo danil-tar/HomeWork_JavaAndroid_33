@@ -16,13 +16,14 @@
         android:textColor="@color/black"
         android:textSize="20sp" />
 
-    <ListView
-        android:id="@+id/simpleListView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#878484"
         android:divider="#f00"
-        android:dividerHeight="1dp"
+        android:dividerHeight="5dp"
+        android:showDividers="middle"
         android:footerDividersEnabled="false"
         android:listSelector="#8BC34A" />
 
