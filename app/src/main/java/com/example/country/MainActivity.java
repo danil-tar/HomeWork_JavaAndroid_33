@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +23,14 @@ public class MainActivity extends AppCompatActivity {
 
         ViewModelProvider viewModelProvider = new ViewModelProvider(this);
         CountrysViewModel countrysViewModel = viewModelProvider.get(CountrysViewModel.class);
+
         countryList = countrysViewModel.getCountryArrayLists().getValue();
+
         countrysViewModel.getCountryArrayLists().observe(this, countryArrayLists -> {
             this.countryList = countryArrayLists;
         });
 
-        recycleList.setAdapter(new CountryAdapter(countryList));
-
+        recycleList.setAdapter(new CountryRecyclerAdapter(countryList, this));
 
 //        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), countryList);
 //        simpleList.setAdapter(customAdapter);
@@ -42,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
     }
-
-
-
 
 //    private static class CustomAdapter extends BaseAdapter {
 //        Context context;

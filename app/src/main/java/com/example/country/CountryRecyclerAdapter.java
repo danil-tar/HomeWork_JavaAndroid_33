@@ -1,5 +1,7 @@
 package com.example.country;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,27 +13,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final List<Country> countryList;
+    private final LayoutInflater inflater;
 
-    List<Country> countryList;
-
-    public CountryAdapter(List<Country> countryList) {
+    public CountryRecyclerAdapter(List<Country> countryList, Context context) {
         this.countryList = countryList;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.activity_item, null);
-        return new CountryViewHolder(view, view.findViewById(R.id.flag_country), view.findViewById(R.id.name_country));
+
+        View view = inflater.inflate(R.layout.activity_item, parent, false);
+        return new CountryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Country country = countryList.get(position);
         CountryViewHolder countryViewHolder = (CountryViewHolder) holder;
-        countryViewHolder.flag.setBackgroundResource(country.flagId);
+        countryViewHolder.flag.setImageResource(country.flagId);
         countryViewHolder.name.setText(country.country);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), Details.class);
+            intent.putExtra(Country.class.getSimpleName(), country);
+            v.getContext().startActivity(intent);
+        });
 
     }
 
@@ -44,10 +54,10 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private final ImageView flag;
         private final TextView name;
 
-        public CountryViewHolder(@NonNull View itemView, ImageView flag, TextView name) {
-            super(itemView);
-            this.flag = flag;
-            this.name = name;
+        public CountryViewHolder(@NonNull View view) {
+            super(view);
+            flag = view.findViewById(R.id.flagCountry);
+            name = view.findViewById(R.id.nameCountry);
         }
     }
 }
