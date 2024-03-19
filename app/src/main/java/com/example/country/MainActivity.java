@@ -2,6 +2,7 @@ package com.example.country;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("TEST", "onCountrySelected:MainActivity");
 
-            detalsViewModel.selectedCountry.setValue(country);
+            detalsViewModel.setSelectedCountry(new MutableLiveData<>(country));
 
             fragmentDetails.setSelectedItem(detalsViewModel.selectedCountry.getValue());
 
@@ -56,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_main, fragmentListCountrys)
                 .commit();
+    }
+        @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("TEST", "onResume:MainActivity");
     }
 
 }

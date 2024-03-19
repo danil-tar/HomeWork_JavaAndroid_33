@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FragmentListCountrys extends Fragment implements CountrySelectListener{
+public class FragmentListCountrys extends Fragment implements CountrySelectListener {
     List<Country> countryArrayLists;
     private AdapterListCountrys adapterListCountrys;
     private FragmentDetails fragmentDetails = new FragmentDetails();
@@ -36,7 +36,7 @@ public class FragmentListCountrys extends Fragment implements CountrySelectListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d("TEST", "onCreate:fragment_list_countrys");
 
 //        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
 //        CountrysListViewModel countrysListViewModel
@@ -53,7 +53,7 @@ public class FragmentListCountrys extends Fragment implements CountrySelectListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d( "TEST", "onCreateView:fragment_list_countrys");
+        Log.d("TEST", "onCreateView:fragment_list_countrys");
         return inflater.inflate(R.layout.fragment_list_countrys, container, false);
 
     }
@@ -63,14 +63,22 @@ public class FragmentListCountrys extends Fragment implements CountrySelectListe
         super.onViewCreated(view, savedInstanceState);
         ListView listView = view.findViewById(R.id.simpleListView);
 
+        Log.d("TEST", "onViewCreated:fragment_list_countrys");
+
+        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+        CountrysListViewModel countrysListViewModel
+                = viewModelProvider.get(CountrysListViewModel.class);
+        DetalsViewModel detalsViewModel = viewModelProvider.get(DetalsViewModel.class);
+
+        countryArrayLists = countrysListViewModel.getCountryArrayList().getValue();
+
         adapterListCountrys = new AdapterListCountrys(getContext(), countryArrayLists);
         listView.setAdapter(adapterListCountrys);
 
-        Log.d("TEST", "onViewCreated:fragment_list_countrys");
-
         listView.setOnItemClickListener((parent, view1, position, id) -> {
-            listener.onCountrySelected(countryArrayLists.get(position));
-
+            Country country = countryArrayLists.get(position);
+            listener.onCountrySelected(country);
+            detalsViewModel.selectedCountry.setValue(country);
             Log.d("TEST", "onItemClick:fragment_list_countrys");
         });
 
