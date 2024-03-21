@@ -43,9 +43,12 @@ public class Details extends AppCompatActivity {
 
         detalsViewModel.getSelectedCountry().observe(this, country -> {
             nameCountry.setText(country.country);
-            Glide.with(this).load(country.urlFlag).into(flagCountry);
             nameCapital.setText(country.capital);
             areaCountry.setText(country.area + " km²");
+            Glide.with(this)
+                    .load(country.urlFlag)
+                    .into(flagCountry);
+
         });
 
         View buttonGoBack = findViewById(R.id.button_go_back);

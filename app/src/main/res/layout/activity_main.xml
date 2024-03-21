@@ -6,12 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/test_imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        />
-
     <TextView
         android:id="@+id/textHead"
         android:layout_width="fill_parent"
