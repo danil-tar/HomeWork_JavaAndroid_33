@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.Serializable;
 
 public class Details extends AppCompatActivity {
@@ -41,7 +43,7 @@ public class Details extends AppCompatActivity {
 
         detalsViewModel.getSelectedCountry().observe(this, country -> {
             nameCountry.setText(country.country);
-            flagCountry.setBackgroundResource(country.flagId);
+            Glide.with(this).load(country.urlFlag).into(flagCountry);
             nameCapital.setText(country.capital);
             areaCountry.setText(country.area + " km²");
         });

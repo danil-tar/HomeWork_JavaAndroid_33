@@ -40,4 +40,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.core:core:1.12.0")
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 }

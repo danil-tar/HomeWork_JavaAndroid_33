@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader;
+
 import java.util.List;
 
 public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -34,8 +37,12 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Country country = countryList.get(position);
         CountryViewHolder countryViewHolder = (CountryViewHolder) holder;
-        countryViewHolder.flag.setImageResource(country.flagId);
         countryViewHolder.name.setText(country.country);
+       Glide.with(countryViewHolder.flag).load(country.urlFlag).into(countryViewHolder.flag);
+
+//        Glide.with(
+//                countryViewHolder.flag).asBitmap().load(country.urlFlag).into(countryViewHolder.flag);
+        ;
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), Details.class);

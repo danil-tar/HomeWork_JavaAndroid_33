@@ -8,17 +8,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity
 public class Country implements Serializable {
+   @PrimaryKey(autoGenerate = true)
+    int id;
     String country;
-    int flagId;
+    String urlFlag;
     String capital;
     int area;
 
-    public Country(String country, int flagId, String capital, int area) {
+    public Country(String country, String urlFlag, String capital, int area) {
         this.country = country;
-        this.flagId = flagId;
+        this.urlFlag = urlFlag;
         this.capital = capital;
         this.area = area;
 
