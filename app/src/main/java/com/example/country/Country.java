@@ -20,13 +20,13 @@ public class Country implements Serializable {
     String country;
     String urlFlag;
     String capital;
-    int area;
+    Integer area;
 
-    public Country(String country, String urlFlag, String capital, int area) {
+    public Country(String country, String urlFlag, String capital, Integer area) {
         this.country = country;
-        this.urlFlag = urlFlag;
         this.capital = capital;
         this.area = area;
+        this.urlFlag = urlFlag;
 
     }
 

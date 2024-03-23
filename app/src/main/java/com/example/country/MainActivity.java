@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+//        App.getInstance().getDatabase().countryDao().deleteAllCountries();
+
         recycleList = findViewById(R.id.recyclerView);
 
         ViewModelProvider viewModelProvider = new ViewModelProvider(this);
@@ -36,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         recycleList.setAdapter(new CountryRecyclerAdapter(countryList, this));
+
+        findViewById(R.id.AddCountry_button).setOnClickListener(v -> {
+           startActivity(new Intent(MainActivity.this, AddCountryActivity.class));
+        });
 
 //        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), countryList);
 //        simpleList.setAdapter(customAdapter);

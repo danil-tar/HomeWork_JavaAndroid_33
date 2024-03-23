@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#C1BEBE">
+    android:background="#C1BEBE"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ListCountry_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        android:layout_above="@+id/AddCountry_button"
+        android:layout_marginBottom="0dp"
         android:orientation="vertical">
 
         <TextView
@@ -26,7 +30,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="564dp"
+            android:layout_height="554dp"
             android:background="#C1BEBE"
             android:divider="#f00"
             android:dividerHeight="5dp"
@@ -34,18 +38,18 @@
             android:showDividers="middle"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/AddCountry_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Country"
-            />
-
     </LinearLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/AddCountry_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:text="Add Country" />
+
+</RelativeLayout>

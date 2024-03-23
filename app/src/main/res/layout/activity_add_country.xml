@@ -7,26 +7,27 @@
     tools:context=".AddCountryActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#CFCCCC"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="26dp"
-        android:background="#CFCCCC">
+        tools:layout_editor_absoluteY="26dp">
 
         <TextView
             android:id="@+id/AddCountry_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#FFC107"
             android:text="Add Country"
             android:textAlignment="center"
             android:textSize="20sp"
             tools:layout_editor_absoluteX="86dp"
-            tools:layout_editor_absoluteY="5dp"
-            android:background="#FFC107"/>
+            tools:layout_editor_absoluteY="5dp" />
 
         <Button
-            android:id="@+id/AddDefoultCountry_button"
+            android:id="@+id/AddDefaultCountry_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="AddDefoultCountry" />
@@ -37,8 +38,76 @@
             android:layout_height="wrap_content"
             android:text="AddNewCountry" />
 
-     
+        <RelativeLayout
+            android:id="@+id/AddNewCountry_relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
-            </LinearLayout>
+            <EditText
+                android:id="@+id/AddNameNewCountry_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter the name of country"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/AddCapitalNewCountry_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/AddNameNewCountry_editText"
+                android:hint="Enter the capital of country"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/AddAreaNewCountry_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/AddCapitalNewCountry_editText"
+                android:hint="Enter the area of country"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/AddUrlFlag_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/AddAreaNewCountry_editText"
+                android:hint="Enter url of flag"
+                android:minHeight="48dp" />
+
+            <Button
+                android:id="@+id/SaveCountry_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save New Country"
+                android:layout_below="@+id/AddUrlFlag_editText" />
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/DeleteAllCountries_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DeleteAllCountries" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_go_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout">
+
+    </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
