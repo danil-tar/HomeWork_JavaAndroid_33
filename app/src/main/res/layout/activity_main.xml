@@ -50,6 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:text="Add Country" />
+        android:text="Add/Delete Country" />
 
 </RelativeLayout>

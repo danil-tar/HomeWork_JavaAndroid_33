@@ -16,7 +16,7 @@ public class AddCountryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_country);
 
-        findViewById(R.id.AddDefaultCountry_button).setOnClickListener(v -> {
+        findViewById(R.id.AddDefaultCountrys_button).setOnClickListener(v -> {
             CountryDao countryDao = App.getInstance().getDatabase().countryDao();
 
             countryDao.insertCountry(new Country("Russia", "https://flagsapi.com/RU/shiny/64.png", "Moscow", 17098242));
@@ -45,9 +45,17 @@ public class AddCountryActivity extends AppCompatActivity {
             findViewById(R.id.DeleteAllCountries_button).setVisibility(View.GONE);
             addNewCountry_relativeLayout.setVisibility(View.VISIBLE);
 
-            String name = findViewById(R.id.AddNameNewCountry_editText).toString();
-            String urlFlag = findViewById(R.id.AddUrlFlag_editText).toString();
-            String capital = findViewById(R.id.AddCapitalNewCountry_editText).toString();
+            EditText nameText = findViewById(R.id.AddNameNewCountry_editText);
+            String nameString  = nameText.getText().toString();
+            String name = nameString.isEmpty() ? "Unknown" : nameString;
+
+            EditText urlFlagText = findViewById(R.id.AddUrlFlag_editText);
+            String urlFlagString = urlFlagText.getText().toString();
+            String urlFlag = urlFlagString.isEmpty() ? "https://flagsapi.com/RU/shiny/64.png" : urlFlagString;
+
+            EditText capitalText = findViewById(R.id.AddCapitalNewCountry_editText);
+            String capitalString = capitalText.getText().toString();
+            String capital = capitalString.isEmpty() ? "Unknown" : capitalString;
 
             EditText areaText = findViewById(R.id.AddAreaNewCountry_editText);
             String stringArea = areaText.getText().toString();
@@ -59,7 +67,14 @@ public class AddCountryActivity extends AppCompatActivity {
                 CountryDao countryDao = App.getInstance().getDatabase().countryDao();
                 countryDao.insertCountry(new Country(name, urlFlag, capital, area));
                 addNewCountry_relativeLayout.setVisibility(View.GONE);
+
+                findViewById(R.id.DeleteAllCountries_button).setVisibility(View.VISIBLE);
             });
+        });
+
+        findViewById(R.id.DeleteAllCountries_button).setOnClickListener(v -> {
+            App.getInstance().getDatabase().countryDao().deleteAllCountries();
+            startActivity(getIntent());
         });
 
 

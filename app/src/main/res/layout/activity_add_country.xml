@@ -27,63 +27,76 @@
             tools:layout_editor_absoluteY="5dp" />
 
         <Button
-            android:id="@+id/AddDefaultCountry_button"
+            android:id="@+id/AddDefaultCountrys_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AddDefoultCountry" />
+            android:text="Add Defoult Countrys" />
 
         <Button
             android:id="@+id/AddNewCountry_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AddNewCountry" />
+            android:text="Add New Country" />
 
-        <RelativeLayout
-            android:id="@+id/AddNewCountry_relativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
 
-            <EditText
-                android:id="@+id/AddNameNewCountry_editText"
-                android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/AddNewCountry_relativeLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Enter the name of country"
-                android:minHeight="48dp" />
+                android:visibility="gone">
 
-            <EditText
-                android:id="@+id/AddCapitalNewCountry_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/AddNameNewCountry_editText"
-                android:hint="Enter the capital of country"
-                android:minHeight="48dp" />
+                <EditText
+                    android:id="@+id/AddNameNewCountry_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the name of country"
+                    android:minHeight="48dp" />
 
-            <EditText
-                android:id="@+id/AddAreaNewCountry_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/AddCapitalNewCountry_editText"
-                android:hint="Enter the area of country"
-                android:minHeight="48dp" />
+                <EditText
+                    android:id="@+id/AddCapitalNewCountry_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/AddNameNewCountry_editText"
+                    android:hint="Enter the capital of country"
+                    android:minHeight="48dp" />
 
-            <EditText
-                android:id="@+id/AddUrlFlag_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/AddAreaNewCountry_editText"
-                android:hint="Enter url of flag"
-                android:minHeight="48dp" />
+                <EditText
+                    android:id="@+id/AddAreaNewCountry_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/AddCapitalNewCountry_editText"
+                    android:hint="Enter the area of country"
+                    android:minHeight="48dp" />
 
-            <Button
-                android:id="@+id/SaveCountry_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save New Country"
-                android:layout_below="@+id/AddUrlFlag_editText" />
+                <EditText
+                    android:id="@+id/AddUrlFlag_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/AddAreaNewCountry_editText"
+                    android:hint="Enter url of flag"
+                    android:minHeight="48dp" />
 
-        </RelativeLayout>
+                <Button
+                    android:id="@+id/SaveCountry_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/AddUrlFlag_editText"
+                    android:text="Save New Country" />
 
+                <Button
+                    android:id="@+id/invisible_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="invisible"
+                    android:layout_below="@+id/SaveCountry_button"
+                    />
+
+            </RelativeLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/DeleteAllCountries_button"
@@ -91,11 +104,9 @@
             android:layout_height="wrap_content"
             android:text="DeleteAllCountries" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
+<!--        <ListView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
 
     </LinearLayout>
 
@@ -106,8 +117,6 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom"
         android:text="Back"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout">
-
-    </Button>
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
