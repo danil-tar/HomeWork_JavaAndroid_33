@@ -40,7 +40,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Glide.with(countryViewHolder.flag).load(country.urlFlag).into(countryViewHolder.flag);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), Details.class);
+            Intent intent = new Intent(v.getContext(), DetailsActivity.class);
             intent.putExtra(Country.class.getSimpleName(), country);
             v.getContext().startActivity(intent);
         });

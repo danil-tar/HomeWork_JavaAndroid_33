@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
 
-public class Details extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     @Override
