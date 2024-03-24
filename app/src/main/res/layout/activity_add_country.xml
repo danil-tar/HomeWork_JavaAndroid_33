@@ -47,12 +47,13 @@
                 android:id="@+id/AddNewCountry_relativeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <EditText
                     android:id="@+id/AddNameNewCountry_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
                     android:hint="Enter the name of country"
                     android:minHeight="48dp" />
 
@@ -60,6 +61,7 @@
                     android:id="@+id/AddCapitalNewCountry_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
                     android:layout_below="@+id/AddNameNewCountry_editText"
                     android:hint="Enter the capital of country"
                     android:minHeight="48dp" />
@@ -68,6 +70,8 @@
                     android:id="@+id/AddAreaNewCountry_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:ems="20"
+                    android:inputType="numberDecimal"
                     android:layout_below="@+id/AddCapitalNewCountry_editText"
                     android:hint="Enter the area of country"
                     android:minHeight="48dp" />
@@ -76,6 +80,7 @@
                     android:id="@+id/AddUrlFlag_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textUri"
                     android:layout_below="@+id/AddAreaNewCountry_editText"
                     android:hint="Enter url of flag"
                     android:minHeight="48dp" />
@@ -85,18 +90,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/AddUrlFlag_editText"
+                    android:layout_marginBottom="48dp"
                     android:text="Save New Country" />
 
-                <Button
-                    android:id="@+id/invisible_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="invisible"
-                    android:layout_below="@+id/SaveCountry_button"
-                    />
 
             </RelativeLayout>
         </ScrollView>
+
+
+        <!--        <ListView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent" />-->
+
 
         <Button
             android:id="@+id/DeleteAllCountries_button"
@@ -104,9 +109,6 @@
             android:layout_height="wrap_content"
             android:text="DeleteAllCountries" />
 
-<!--        <ListView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
 
     </LinearLayout>
 

@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.net.URL;
 
 public class AddCountryActivity extends AppCompatActivity {
 
@@ -16,8 +20,8 @@ public class AddCountryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_country);
 
+        CountryDao countryDao = App.getInstance().getDatabase().countryDao();
         findViewById(R.id.AddDefaultCountrys_button).setOnClickListener(v -> {
-            CountryDao countryDao = App.getInstance().getDatabase().countryDao();
 
             countryDao.insertCountry(new Country("Russia", "https://flagsapi.com/RU/shiny/64.png", "Moscow", 17098242));
             countryDao.insertCountry(new Country("China", "https://flagsapi.com/CN/shiny/64.png", "Beijing", 9596961));
@@ -32,7 +36,6 @@ public class AddCountryActivity extends AppCompatActivity {
             countryDao.insertCountry(new Country("Portugal", "https://flagsapi.com/PT/shiny/64.png", "Lisbon", 92212));
             countryDao.insertCountry(new Country("Spain", "https://flagsapi.com/ES/shiny/64.png", "Madrid", 505992));
 
-            startActivity(getIntent());
         });
 
         findViewById(R.id.button_go_back).setOnClickListener(v -> {
@@ -44,39 +47,100 @@ public class AddCountryActivity extends AppCompatActivity {
 
             findViewById(R.id.DeleteAllCountries_button).setVisibility(View.GONE);
             addNewCountry_relativeLayout.setVisibility(View.VISIBLE);
+        });
+
+        findViewById(R.id.SaveCountry_button).setOnClickListener(v1 -> {
+            View addNewCountry_relativeLayout = findViewById(R.id.AddNewCountry_relativeLayout);
 
             EditText nameText = findViewById(R.id.AddNameNewCountry_editText);
-            String nameString  = nameText.getText().toString();
-            String name = nameString.isEmpty() ? "Unknown" : nameString;
-
             EditText urlFlagText = findViewById(R.id.AddUrlFlag_editText);
-            String urlFlagString = urlFlagText.getText().toString();
-            String urlFlag = urlFlagString.isEmpty() ? "https://flagsapi.com/RU/shiny/64.png" : urlFlagString;
-
             EditText capitalText = findViewById(R.id.AddCapitalNewCountry_editText);
-            String capitalString = capitalText.getText().toString();
-            String capital = capitalString.isEmpty() ? "Unknown" : capitalString;
-
             EditText areaText = findViewById(R.id.AddAreaNewCountry_editText);
+
+            String nameString = nameText.getText().toString();
+            if (checkNameCountry(countryDao, nameText, nameString)) return;
+            String name = nameString;
+
+            String urlFlagString = urlFlagText.getText().toString();
+            if (checkUrlFlag(urlFlagText, urlFlagString)) return;
+            String urlFlag = urlFlagString;
+
+            String capitalString = capitalText.getText().toString();
+            if (checkCapital(capitalText, capitalString)) return;
+            String capital = capitalText.getText().toString();
+
             String stringArea = areaText.getText().toString();
-            stringArea = stringArea.isEmpty() ? "0" : stringArea;
+            if (checkArea(areaText, stringArea)) return;
             Integer area = Integer.parseInt(stringArea);
 
-            findViewById(R.id.SaveCountry_button).setOnClickListener(v1 -> {
+            countryDao.insertCountry(new Country(name, urlFlag, capital, area));
+            Toast.makeText(this, "New Country is saved", Toast.LENGTH_SHORT).show();
+            addNewCountry_relativeLayout.setVisibility(View.GONE);
 
-                CountryDao countryDao = App.getInstance().getDatabase().countryDao();
-                countryDao.insertCountry(new Country(name, urlFlag, capital, area));
-                addNewCountry_relativeLayout.setVisibility(View.GONE);
-
-                findViewById(R.id.DeleteAllCountries_button).setVisibility(View.VISIBLE);
-            });
+            findViewById(R.id.DeleteAllCountries_button).setVisibility(View.VISIBLE);
         });
+
 
         findViewById(R.id.DeleteAllCountries_button).setOnClickListener(v -> {
-            App.getInstance().getDatabase().countryDao().deleteAllCountries();
-            startActivity(getIntent());
+            countryDao.deleteAllCountries();
         });
 
 
+    }
+
+    private boolean checkArea(EditText areaText, String stringArea) {
+        if (!stringArea.matches("[0-9]+")) {
+            Toast.makeText(this, "Area should contain only numbers", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (stringArea.isEmpty()) {
+            Toast.makeText(this, "Area is empty", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkCapital(EditText capitalText, String capitalString) {
+        if (capitalString.isEmpty()) {
+            Toast.makeText(this, "Capital name is empty", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (!capitalString.matches("[a-zA-Z]+")) {
+            Toast.makeText(this, "Capital name should contain only letters", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkUrlFlag(EditText urlFlagText, String urlFlagString) {
+        if (!isUrlCorrect(urlFlagText, urlFlagString)) {
+            Toast.makeText(this, "URL is incorrect", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkNameCountry(CountryDao countryDao, EditText nameText, String nameString) {
+        if (countryDao.isCountryExist(nameString)) {
+            Toast.makeText(this, "Country already exists", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (nameString.isEmpty()) {
+            Toast.makeText(this, "Country name is empty", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isUrlCorrect(EditText urlText, String urlString) {
+        try {
+            URL url = new URL(urlString);
+            urlText.setTextColor(Color.BLACK);
+            return true;
+
+        } catch (Exception e) {
+            urlText.setTextColor(Color.RED);
+            return false;
+        }
     }
 }

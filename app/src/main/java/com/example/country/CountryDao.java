@@ -16,6 +16,9 @@ public interface CountryDao {
     @Query("SELECT * FROM country WHERE country = :country")
     Country getCountry(String country);
 
+    @Query("SELECT EXISTS(SELECT * FROM country WHERE country = :country)")
+    boolean isCountryExist(String country);
+
     @Insert
     void insertCountry(Country country);
 
