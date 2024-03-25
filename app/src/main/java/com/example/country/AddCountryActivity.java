@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.net.URL;
+import java.util.List;
 
 public class AddCountryActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class AddCountryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_country);
+        setContentView(R.layout.activity_add_delete_country);
 
         CountryDao countryDao = App.getInstance().getDatabase().countryDao();
         findViewById(R.id.AddDefaultCountrys_button).setOnClickListener(v -> {
@@ -45,8 +46,14 @@ public class AddCountryActivity extends AppCompatActivity {
         findViewById(R.id.AddNewCountry_button).setOnClickListener(v -> {
             View addNewCountry_relativeLayout = findViewById(R.id.AddNewCountry_relativeLayout);
 
-            findViewById(R.id.DeleteAllCountries_button).setVisibility(View.GONE);
+            if (addNewCountry_relativeLayout.getVisibility() == (View.VISIBLE)) {
+                addNewCountry_relativeLayout.setVisibility(View.GONE);
+                return;
+            }
+
+            findViewById(R.id.DeleteCountry_button).setVisibility(View.GONE);
             addNewCountry_relativeLayout.setVisibility(View.VISIBLE);
+
         });
 
         findViewById(R.id.SaveCountry_button).setOnClickListener(v1 -> {
@@ -61,10 +68,6 @@ public class AddCountryActivity extends AppCompatActivity {
             if (checkNameCountry(countryDao, nameText, nameString)) return;
             String name = nameString;
 
-            String urlFlagString = urlFlagText.getText().toString();
-            if (checkUrlFlag(urlFlagText, urlFlagString)) return;
-            String urlFlag = urlFlagString;
-
             String capitalString = capitalText.getText().toString();
             if (checkCapital(capitalText, capitalString)) return;
             String capital = capitalText.getText().toString();
@@ -73,15 +76,29 @@ public class AddCountryActivity extends AppCompatActivity {
             if (checkArea(areaText, stringArea)) return;
             Integer area = Integer.parseInt(stringArea);
 
+            String urlFlagString = urlFlagText.getText().toString();
+            if (checkUrlFlag(urlFlagText, urlFlagString)) return;
+            String urlFlag = urlFlagString;
+
             countryDao.insertCountry(new Country(name, urlFlag, capital, area));
             Toast.makeText(this, "New Country is saved", Toast.LENGTH_SHORT).show();
             addNewCountry_relativeLayout.setVisibility(View.GONE);
 
-            findViewById(R.id.DeleteAllCountries_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.DeleteCountry_button).setVisibility(View.VISIBLE);
         });
 
 
-        findViewById(R.id.DeleteAllCountries_button).setOnClickListener(v -> {
+        findViewById(R.id.DeleteCountry_button).setOnClickListener(v -> {
+            View deleteCountries_listView = findViewById(R.id.deleteCountries_listView);
+
+            if (deleteCountries_listView.getVisibility() == (View.VISIBLE)) {
+                deleteCountries_listView.setVisibility(View.GONE);
+                return;
+            }
+            deleteCountries_listView.setVisibility(View.VISIBLE);
+            List<Country> allCountries = countryDao.getAllCountries();
+
+
             countryDao.deleteAllCountries();
         });
 

@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFC107"
-            android:text="Add Country"
+            android:text="Add/Delete Country"
             android:textAlignment="center"
             android:textSize="20sp"
             tools:layout_editor_absoluteX="86dp"
@@ -40,6 +40,7 @@
 
 
         <ScrollView
+            android:id="@+id/scrollView_addNewCountry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -47,42 +48,42 @@
                 android:id="@+id/AddNewCountry_relativeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/AddNameNewCountry_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:hint="Enter the name of country"
+                    android:inputType="textPersonName"
                     android:minHeight="48dp" />
 
                 <EditText
                     android:id="@+id/AddCapitalNewCountry_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:layout_below="@+id/AddNameNewCountry_editText"
                     android:hint="Enter the capital of country"
+                    android:inputType="textPersonName"
                     android:minHeight="48dp" />
 
                 <EditText
                     android:id="@+id/AddAreaNewCountry_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="20"
-                    android:inputType="numberDecimal"
                     android:layout_below="@+id/AddCapitalNewCountry_editText"
+                    android:ems="20"
                     android:hint="Enter the area of country"
+                    android:inputType="numberDecimal"
                     android:minHeight="48dp" />
 
                 <EditText
                     android:id="@+id/AddUrlFlag_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri"
                     android:layout_below="@+id/AddAreaNewCountry_editText"
                     android:hint="Enter url of flag"
+                    android:inputType="textUri"
                     android:minHeight="48dp" />
 
                 <Button
@@ -92,25 +93,49 @@
                     android:layout_below="@+id/AddUrlFlag_editText"
                     android:layout_marginBottom="48dp"
                     android:text="Save New Country" />
-
-
             </RelativeLayout>
         </ScrollView>
 
-
-        <!--        <ListView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent" />-->
-
-
         <Button
-            android:id="@+id/DeleteAllCountries_button"
+            android:id="@+id/DeleteCountry_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DeleteAllCountries" />
+            android:text="Delete Country" />
 
+        <ScrollView
+            android:id="@+id/scrollView_deleteCountries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/deleteCountries_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="@+id/DeleteCountry_button"
+                app:layout_constraintBottom_toTopOf="@+id/button_go_back"
+                android:visibility="visible">
+
+                <ListView
+                    android:id="@+id/deleteCountries_listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toTopOf="@+id/DeleteCountry_button"
+                    />
+
+                <Button
+                    android:id="@+id/DeleteSelectedCountries_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Delete Selected Countries"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                   />
+
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
+
 
     <Button
         android:id="@+id/button_go_back"
