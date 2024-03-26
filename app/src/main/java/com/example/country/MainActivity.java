@@ -6,10 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         recycleList.setAdapter(new CountryRecyclerAdapter(countryList, this));
 
         findViewById(R.id.AddCountry_button).setOnClickListener(v -> {
-           startActivity(new Intent(MainActivity.this, AddCountryActivity.class));
+           startActivity(new Intent(MainActivity.this, AddDeleteCountryActivity.class));
         });
 
 //        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), countryList);

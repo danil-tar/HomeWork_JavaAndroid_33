@@ -6,47 +6,52 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
-public class CountryDeleteAdapter {
-    Context context;
-    List<Country> allCountries = new ArrayList<>();
+public class CountryDeleteAdapter extends BaseAdapter {
 
-    public CountryDeleteAdapter(Context context) {
-        this.context = context;
-        allCountries = App.getInstance().getDatabase().countryDao().getAllCountries();
+    Context context;
+    List<Country> countryArrayLists;
+    LayoutInflater inflater;
+
+    public CountryDeleteAdapter(Context applicationContext, List<Country> countryArrayLists) {
+        this.context = applicationContext;
+        this.countryArrayLists = countryArrayLists;
+        inflater = (LayoutInflater.from(applicationContext));
     }
 
-    BaseAdapter baseAdapter = new BaseAdapter() {
-        @Override
-        public int getCount() {
-            return allCountries.size();
-        }
+    @Override
+    public int getCount() {
+        return countryArrayLists.size();
+    }
 
-        @Override
-        public Object getItem(int position) {
-            return allCountries.get(position);
-        }
+    @Override
+    public Object getItem(int position) {
+        return position;
+    }
 
-        @Override
-        public long getItemId(int position) {
-            return allCountries.get(position).id;
-        }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            @SuppressLint("ViewHolder") View view = LayoutInflater.from(context).
-                    inflate(R.layout.activity_add_delete_country, parent, false);
+        @SuppressLint("ViewHolder") View view = inflater.inflate(R.layout.activity_item_delete, null);
 
-            Country country = allCountries.get(position);
+        CheckBox checkBox = view.findViewById(R.id.checkBoxDeletingCountry);
+        TextView country = (TextView) view.findViewById(R.id.nameDeletingCountry);
 
+        country.setText(countryArrayLists.get(position).country);
 
-            return null;
-        }
-    };
-
+        return view;
+    }
 }
+

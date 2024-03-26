@@ -7,13 +7,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.net.URL;
 import java.util.List;
 
-public class AddCountryActivity extends AppCompatActivity {
+public class AddDeleteCountryActivity extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -21,9 +23,18 @@ public class AddCountryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_delete_country);
 
-        CountryDao countryDao = App.getInstance().getDatabase().countryDao();
-        findViewById(R.id.AddDefaultCountrys_button).setOnClickListener(v -> {
+        View btnGoBack = findViewById(R.id.button_go_back);
+        View btnAddDefaultCountries = findViewById(R.id.AddDefaultCountrys_button);
+        View btnAddNewCountries = findViewById(R.id.AddNewCountry_button);
+        View addNewCountry_relativeLayout = findViewById(R.id.AddNewCountry_relativeLayout);
+        View btnDeleteCountry = findViewById(R.id.DeleteCountry_button);
+        View btnSaveCountry = findViewById(R.id.SaveCountry_button);
 
+
+        CountryDao countryDao = App.getInstance().getDatabase().countryDao();
+
+        btnAddDefaultCountries.setOnClickListener(v -> {
+            btnAddDefaultCountries.setVisibility(View.GONE);
             countryDao.insertCountry(new Country("Russia", "https://flagsapi.com/RU/shiny/64.png", "Moscow", 17098242));
             countryDao.insertCountry(new Country("China", "https://flagsapi.com/CN/shiny/64.png", "Beijing", 9596961));
             countryDao.insertCountry(new Country("Germany", "https://flagsapi.com/DE/shiny/64.png", "Berlin", 357578));
@@ -36,28 +47,28 @@ public class AddCountryActivity extends AppCompatActivity {
             countryDao.insertCountry(new Country("Great Britain", "https://flagsapi.com/GB/shiny/64.png", "London", 242495));
             countryDao.insertCountry(new Country("Portugal", "https://flagsapi.com/PT/shiny/64.png", "Lisbon", 92212));
             countryDao.insertCountry(new Country("Spain", "https://flagsapi.com/ES/shiny/64.png", "Madrid", 505992));
-
+            Toast.makeText(this, "All Default Countries are download", Toast.LENGTH_SHORT).show();
         });
 
-        findViewById(R.id.button_go_back).setOnClickListener(v -> {
-            startActivity(new Intent(AddCountryActivity.this, MainActivity.class));
+        btnGoBack.setOnClickListener(v -> {
+            startActivity(new Intent(AddDeleteCountryActivity.this, MainActivity.class));
         });
 
-        findViewById(R.id.AddNewCountry_button).setOnClickListener(v -> {
-            View addNewCountry_relativeLayout = findViewById(R.id.AddNewCountry_relativeLayout);
-
+        btnAddNewCountries.setOnClickListener(v -> {
             if (addNewCountry_relativeLayout.getVisibility() == (View.VISIBLE)) {
                 addNewCountry_relativeLayout.setVisibility(View.GONE);
+                btnDeleteCountry.setVisibility(View.VISIBLE);
+
                 return;
             }
-
-            findViewById(R.id.DeleteCountry_button).setVisibility(View.GONE);
             addNewCountry_relativeLayout.setVisibility(View.VISIBLE);
+            btnDeleteCountry.setVisibility(View.GONE);
+
 
         });
 
-        findViewById(R.id.SaveCountry_button).setOnClickListener(v1 -> {
-            View addNewCountry_relativeLayout = findViewById(R.id.AddNewCountry_relativeLayout);
+
+        btnSaveCountry.setOnClickListener(v1 -> {
 
             EditText nameText = findViewById(R.id.AddNameNewCountry_editText);
             EditText urlFlagText = findViewById(R.id.AddUrlFlag_editText);
@@ -84,24 +95,39 @@ public class AddCountryActivity extends AppCompatActivity {
             Toast.makeText(this, "New Country is saved", Toast.LENGTH_SHORT).show();
             addNewCountry_relativeLayout.setVisibility(View.GONE);
 
-            findViewById(R.id.DeleteCountry_button).setVisibility(View.VISIBLE);
         });
 
+        List<Country> countries = countryDao.getAllCountries();
 
-        findViewById(R.id.DeleteCountry_button).setOnClickListener(v -> {
-            View deleteCountries_listView = findViewById(R.id.deleteCountries_listView);
+        ListView listDeleteCountries = findViewById(R.id.deleteCountries_listView);
+        CountryDeleteAdapter countryDeleteAdapter = new CountryDeleteAdapter(this, countries);
+        listDeleteCountries.setAdapter(countryDeleteAdapter);
 
-            if (deleteCountries_listView.getVisibility() == (View.VISIBLE)) {
-                deleteCountries_listView.setVisibility(View.GONE);
+
+        View deleteCountries_RelativeLayout = findViewById(R.id.deleteCountries_RelativeLayout);
+
+        btnDeleteCountry.setOnClickListener(v -> {
+            if (deleteCountries_RelativeLayout.getVisibility() == (View.VISIBLE)) {
+                deleteCountries_RelativeLayout.setVisibility(View.GONE);
                 return;
             }
-            deleteCountries_listView.setVisibility(View.VISIBLE);
-            List<Country> allCountries = countryDao.getAllCountries();
+            deleteCountries_RelativeLayout.setVisibility(View.VISIBLE);
 
-
-            countryDao.deleteAllCountries();
         });
 
+        findViewById(R.id.DeleteSelectedCountries_button).setOnClickListener(v1 -> {
+            for (int i = 0; i < listDeleteCountries.getChildCount(); i++) {
+                View view = listDeleteCountries.getChildAt(i);
+                CheckBox checkBox = view.findViewById(R.id.checkBoxDeletingCountry);
+                if (checkBox.isChecked()) {
+                    Country country = countries.get(i);
+                    countryDao.deleteCountry(country);
+                }
+            }
+            countryDeleteAdapter.notifyDataSetChanged();
+            deleteCountries_RelativeLayout.setVisibility(View.GONE);
+            Toast.makeText(this, "Selected countries are deleted", Toast.LENGTH_SHORT).show();
+        });
 
     }
 

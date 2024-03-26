@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -15,8 +16,8 @@ import java.io.Serializable;
 
 @Entity
 public class Country implements Serializable {
-   @PrimaryKey(autoGenerate = true)
-    int id;
+    @PrimaryKey
+    @NonNull
     String country;
     String urlFlag;
     String capital;
