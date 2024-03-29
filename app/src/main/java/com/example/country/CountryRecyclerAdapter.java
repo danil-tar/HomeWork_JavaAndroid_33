@@ -16,10 +16,10 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final List<Country> countryList;
+    private final List<CountryDtoDb> countryList;
     private final LayoutInflater inflater;
 
-    public CountryRecyclerAdapter(List<Country> countryList, Context context) {
+    public CountryRecyclerAdapter(List<CountryDtoDb> countryList, Context context) {
         this.countryList = countryList;
         this.inflater = LayoutInflater.from(context);
     }
@@ -34,14 +34,14 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Country country = countryList.get(position);
+        CountryDtoDb country = countryList.get(position);
         CountryViewHolder countryViewHolder = (CountryViewHolder) holder;
         countryViewHolder.name.setText(country.country);
         Glide.with(countryViewHolder.flag).load(country.urlFlag).into(countryViewHolder.flag);
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), DetailsActivity.class);
-            intent.putExtra(Country.class.getSimpleName(), country);
+            intent.putExtra(CountryDtoDb.class.getSimpleName(), country);
             v.getContext().startActivity(intent);
         });
     }

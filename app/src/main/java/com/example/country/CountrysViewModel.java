@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountrysViewModel extends ViewModel {
-    MutableLiveData<List<Country>> countryArrayLists = new MutableLiveData<>();
+    MutableLiveData<List<CountryDtoDb>> countryArrayLists = new MutableLiveData<>();
 
     public CountrysViewModel() {
-        ArrayList<Country> countries = new ArrayList<>();
+        ArrayList<CountryDtoDb> countries = new ArrayList<>();
         App.getInstance().getDatabase().countryDao().getAllCountries().forEach(country -> {
             countries.add(country);
         });
@@ -18,11 +18,11 @@ public class CountrysViewModel extends ViewModel {
         this.countryArrayLists.setValue(countries);
     }
 
-    public MutableLiveData<List<Country>> getCountryArrayLists() {
+    public MutableLiveData<List<CountryDtoDb>> getCountryArrayLists() {
         return countryArrayLists;
     }
 
-    public void setCountryArrayLists(MutableLiveData<List<Country>> countryArrayLists) {
+    public void setCountryArrayLists(MutableLiveData<List<CountryDtoDb>> countryArrayLists) {
         this.countryArrayLists = countryArrayLists;
     }
 }

@@ -12,23 +12,23 @@ import java.util.List;
 @Dao
 public interface CountryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCountry(Country country);
+    void insertCountry(CountryDtoDb country);
 
-    @Query("SELECT * FROM country")
-    List<Country> getAllCountries();
+    @Query("SELECT * FROM CountryDtoDb")
+    List<CountryDtoDb> getAllCountries();
 
-    @Query("SELECT * FROM country WHERE country = :country")
-    Country getCountry(String country);
+    @Query("SELECT * FROM CountryDtoDb WHERE country = :country")
+    CountryDtoDb getCountry(String country);
 
-    @Query("SELECT EXISTS(SELECT * FROM country WHERE country = :country)")
+    @Query("SELECT EXISTS(SELECT * FROM CountryDtoDb WHERE country = :country)")
     boolean isCountryExist(String country);
 
     @Delete
-    void deleteCountry(Country country);
+    void deleteCountry(CountryDtoDb country);
 
     @Update
-    void updateCountry(Country country);
+    void updateCountry(CountryDtoDb country);
 
-    @Query("DELETE FROM country")
+    @Query("DELETE FROM CountryDtoDb")
     void deleteAllCountries();
 }

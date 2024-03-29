@@ -21,83 +21,20 @@ public class AddDeleteCountryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_delete_country);
+        setContentView(R.layout.activity_delete_country);
 
         View btnGoBack = findViewById(R.id.button_go_back);
-        View btnAddDefaultCountries = findViewById(R.id.AddDefaultCountrys_button);
-        View btnAddNewCountries = findViewById(R.id.AddNewCountry_button);
-        View addNewCountry_relativeLayout = findViewById(R.id.AddNewCountry_relativeLayout);
         View btnDeleteCountry = findViewById(R.id.DeleteCountry_button);
-        View btnSaveCountry = findViewById(R.id.SaveCountry_button);
-
-
-        CountryDao countryDao = App.getInstance().getDatabase().countryDao();
-
-        btnAddDefaultCountries.setOnClickListener(v -> {
-            btnAddDefaultCountries.setVisibility(View.GONE);
-            countryDao.insertCountry(new Country("Russia", "https://flagsapi.com/RU/shiny/64.png", "Moscow", 17098242));
-            countryDao.insertCountry(new Country("China", "https://flagsapi.com/CN/shiny/64.png", "Beijing", 9596961));
-            countryDao.insertCountry(new Country("Germany", "https://flagsapi.com/DE/shiny/64.png", "Berlin", 357578));
-            countryDao.insertCountry(new Country("India", "https://flagsapi.com/IN/shiny/64.png", "New Delhi", 3287263));
-            countryDao.insertCountry(new Country("Italia", "https://flagsapi.com/IT/shiny/64.png", "Rome", 301340));
-            countryDao.insertCountry(new Country("France", "https://flagsapi.com/FR/shiny/64.png", "Paris", 543965));
-            countryDao.insertCountry(new Country("Canada", "https://flagsapi.com/CA/shiny/64.png", "Ottawa", 9984670));
-            countryDao.insertCountry(new Country("USA", "https://flagsapi.com/US/shiny/64.png", "Washington", 9826675));
-            countryDao.insertCountry(new Country("Vietnam", "https://flagsapi.com/VN/shiny/64.png", "Hanoi", 331212));
-            countryDao.insertCountry(new Country("Great Britain", "https://flagsapi.com/GB/shiny/64.png", "London", 242495));
-            countryDao.insertCountry(new Country("Portugal", "https://flagsapi.com/PT/shiny/64.png", "Lisbon", 92212));
-            countryDao.insertCountry(new Country("Spain", "https://flagsapi.com/ES/shiny/64.png", "Madrid", 505992));
-            Toast.makeText(this, "All Default Countries are download", Toast.LENGTH_SHORT).show();
-        });
 
         btnGoBack.setOnClickListener(v -> {
             startActivity(new Intent(AddDeleteCountryActivity.this, MainActivity.class));
         });
 
-        btnAddNewCountries.setOnClickListener(v -> {
-            if (addNewCountry_relativeLayout.getVisibility() == (View.VISIBLE)) {
-                addNewCountry_relativeLayout.setVisibility(View.GONE);
-                btnDeleteCountry.setVisibility(View.VISIBLE);
-
-                return;
-            }
-            addNewCountry_relativeLayout.setVisibility(View.VISIBLE);
-            btnDeleteCountry.setVisibility(View.GONE);
+        CountryDao countryDao = App.getInstance().getDatabase().countryDao();
 
 
-        });
 
-
-        btnSaveCountry.setOnClickListener(v1 -> {
-
-            EditText nameText = findViewById(R.id.AddNameNewCountry_editText);
-            EditText urlFlagText = findViewById(R.id.AddUrlFlag_editText);
-            EditText capitalText = findViewById(R.id.AddCapitalNewCountry_editText);
-            EditText areaText = findViewById(R.id.AddAreaNewCountry_editText);
-
-            String nameString = nameText.getText().toString();
-            if (checkNameCountry(countryDao, nameText, nameString)) return;
-            String name = nameString;
-
-            String capitalString = capitalText.getText().toString();
-            if (checkCapital(capitalText, capitalString)) return;
-            String capital = capitalText.getText().toString();
-
-            String stringArea = areaText.getText().toString();
-            if (checkArea(areaText, stringArea)) return;
-            Integer area = Integer.parseInt(stringArea);
-
-            String urlFlagString = urlFlagText.getText().toString();
-            if (checkUrlFlag(urlFlagText, urlFlagString)) return;
-            String urlFlag = urlFlagString;
-
-            countryDao.insertCountry(new Country(name, urlFlag, capital, area));
-            Toast.makeText(this, "New Country is saved", Toast.LENGTH_SHORT).show();
-            addNewCountry_relativeLayout.setVisibility(View.GONE);
-
-        });
-
-        List<Country> countries = countryDao.getAllCountries();
+        List<CountryDtoDb> countries = countryDao.getAllCountries();
 
         ListView listDeleteCountries = findViewById(R.id.deleteCountries_listView);
         CountryDeleteAdapter countryDeleteAdapter = new CountryDeleteAdapter(this, countries);
@@ -120,7 +57,7 @@ public class AddDeleteCountryActivity extends AppCompatActivity {
                 View view = listDeleteCountries.getChildAt(i);
                 CheckBox checkBox = view.findViewById(R.id.checkBoxDeletingCountry);
                 if (checkBox.isChecked()) {
-                    Country country = countries.get(i);
+                    CountryDtoDb country = countries.get(i);
                     countryDao.deleteCountry(country);
                 }
             }
