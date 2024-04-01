@@ -20,6 +20,7 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private final LayoutInflater inflater;
 
     public CountryRecyclerAdapter(List<Country> countryList, Context context) {
+
         this.countryList = countryList;
         this.inflater = LayoutInflater.from(context);
     }
@@ -40,9 +41,14 @@ public class CountryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Glide.with(countryViewHolder.flag).load(country.urlFlag).into(countryViewHolder.flag);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), DetailsActivity.class);
-            intent.putExtra(Country.class.getSimpleName(), country);
-            v.getContext().startActivity(intent);
+
+            CustomDialog customDialog = new CustomDialog();
+            customDialog.country = country;
+            customDialog.show(((MainActivity) v.getContext()).getSupportFragmentManager(), "dialog");
+
+//            Intent intent = new Intent(v.getContext(), DetailsActivity.class);
+//            intent.putExtra(Country.class.getSimpleName(), country);
+//            v.getContext().startActivity(intent);
         });
     }
 
